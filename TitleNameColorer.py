@@ -21,15 +21,20 @@ for file in inputFiles:
     #print(name)
     path = file.replace("Input\\","Output\\").replace("\\%s"%name,"")
     #print(path)
-    
+
     
     f = open(file, "r",encoding='utf-8-sig',errors='ignore')
     print(file)
     
+    languageFound = False
+    language = ""
 
     writeFile = False
     titleList = []
     for line in f:
+        if line.strip().startswith("l_") and not languageFound:
+            language = line
+            print(language)
         if "_male_" in line.lower() or "_female_" in line.lower():
             if "\"\"" in line or "\" \"" in line or "[ROOT." in line or "[CHARACTER." in line or "$" in line or "councillor" in line:
                 pass
@@ -68,8 +73,9 @@ for file in inputFiles:
         if not os.path.exists(path):
             os.makedirs(path)
         f2 = open(file.replace("Input\\","Output\\").replace(name,"z_ctt_patch_%s"%name), "w",encoding='utf-8-sig',errors='ignore')
-        f2.write("l_english:\n\n")
+        f2.write("%s"%language)
         for i in titleList:
             f2.write(i)
         f2.close()
+    f.close()
     #print(file)
