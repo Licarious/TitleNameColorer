@@ -14,6 +14,12 @@ def replacenth(string, sub, wanted, n):
 
 inputFiles = glob.glob("Input/**/*.yml",recursive = True)
 
+T0 = [" baron_", "_baron_"]
+T1 = [" count_", "_count_"]
+T2 = [" duke_", "_duke_"]
+T3 = [" king_", "_king_"]
+T4 = [" emperor_", "_emperor_", "emperor_"]
+
 
 
 for file in inputFiles:
@@ -25,6 +31,8 @@ for file in inputFiles:
     
     f = open(file, "r",encoding='utf-8-sig',errors='ignore')
     print(file)
+
+    
     
     languageFound = False
     language = ""
@@ -32,43 +40,55 @@ for file in inputFiles:
     writeFile = False
     titleList = []
     for line in f:
+        l0 = line.split(":")[0]
         if line.strip().startswith("l_") and not languageFound:
             language = line
             print(language)
-        if "_male_" in line.lower() or "_female_" in line.lower():
-            if "\"\"" in line or "\" \"" in line or "[ROOT." in line or "[CHARACTER." in line or "$" in line or "councillor" in line:
+        if "_male_" in l0.lower() or "_female_" in l0.lower():
+            tierFound = False
+            if "\"\"" in line:
                 pass
             else:
-                if " baron_" in line.lower() or "_baron_" in line.lower():
-                    l1 = replacenth(line,"\"","\"#tier0 ",1)
-                    l2 = replacenth(l1,"\"","#!\"",2)
-                    #print(l2)
-                    titleList.append(l2)
-                    writeFile = True
-                if " count_" in line.lower() or "_count_" in line.lower():
-                    l1 = replacenth(line,"\"","\"#tier1 ",1)
-                    l2 = replacenth(l1,"\"","#!\"",2)
-                    #print(l2)
-                    titleList.append(l2)
-                    writeFile = True
-                if " duke_" in line.lower() or "_duke_" in line.lower():
-                    l1 = replacenth(line,"\"","\"#tier2 ",1)
-                    l2 = replacenth(l1,"\"","#!\"",2)
-                    #print(l2)
-                    titleList.append(l2)
-                    writeFile = True
-                if " king_" in line.lower() or "_king_" in line.lower():
-                    l1 = replacenth(line,"\"","\"#tier3 ",1)
-                    l2 = replacenth(l1,"\"","#!\"",2)
-                    #print(l2)
-                    titleList.append(l2)
-                    writeFile = True
-                if " emperor_" in line.lower() or "_emperor_" in line.lower():
-                    l1 = replacenth(line,"\"","\"#tier4 ",1)
-                    l2 = replacenth(l1,"\"","#!\"",2)
-                    #print(l2)
-                    titleList.append(l2)
-                    writeFile = True
+                for e in T0:
+                    if e in l0.lower() and not tierFound:
+                        l1 = replacenth(line,"\"","\"#tier0 ",1)
+                        l2 = replacenth(l1,"\"","#!\"",2)
+                        #print(l2)
+                        titleList.append(l2)
+                        writeFile = True
+                        tierFound = True
+                for e in T1:
+                    if e in l0.lower() and not tierFound:
+                        l1 = replacenth(line,"\"","\"#tier1 ",1)
+                        l2 = replacenth(l1,"\"","#!\"",2)
+                        #print(l2)
+                        titleList.append(l2)
+                        writeFile = True
+                        tierFound = True
+                for e in T2:
+                    if e in l0.lower() and not tierFound:
+                        l1 = replacenth(line,"\"","\"#tier2 ",1)
+                        l2 = replacenth(l1,"\"","#!\"",2)
+                        #print(l2)
+                        titleList.append(l2)
+                        writeFile = True
+                        tierFound = True
+                for e in T3:
+                    if e in l0.lower() and not tierFound:
+                        l1 = replacenth(line,"\"","\"#tier3 ",1)
+                        l2 = replacenth(l1,"\"","#!\"",2)
+                        #print(l2)
+                        titleList.append(l2)
+                        writeFile = True
+                        tierFound = True
+                for e in T4:
+                    if e in l0.lower() and not tierFound:
+                        l1 = replacenth(line,"\"","\"#tier4 ",1)
+                        l2 = replacenth(l1,"\"","#!\"",2)
+                        #print(l2)
+                        titleList.append(l2)
+                        writeFile = True
+                        tierFound = True
     if writeFile:
         if not os.path.exists(path):
             os.makedirs(path)
