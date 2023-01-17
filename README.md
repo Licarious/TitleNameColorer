@@ -1,5 +1,4 @@
 # TitleNameColorer
-Automates adding loc flags that Colored Tiers (Titles) to landed title localization
 This script will scan through all files in its Input folder looking for localizations that look like a landed title and apply the appropriate tags for that rank, before writing the updated localizations to a new file(s) that should overwrite just those lines.
 
 ## Usage:
